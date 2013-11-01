@@ -4,6 +4,7 @@
     Author     : memmedimanli
 --%>
 
+<%@page import="java.net.InetAddress"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -21,6 +22,10 @@
             <h1>Hello ${sessionScope.username}!</h1>
              
             <%
+                
+                InetAddress ipAddress = InetAddress.getByName(request.getHeader("X-FORWARDED-FOR"));
+                out.println("IP address is " + ipAddress + "<br />");
+               
                 out.println("Session id = " + session.getId() + "<br/>");
                 out.println("Session create time = " + new Date(session.getCreationTime())  + "<br/>");
                 out.println("Session last active time = " + new Date(session.getLastAccessedTime()) + "<br/>");

@@ -1,16 +1,13 @@
-
 package FilterBeta;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -18,55 +15,51 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.*;
 
 /**
  *
  * @author memmedimanli
  */
+public class ipFilter implements Filter {
 
-public class TimeFilter implements Filter {
-    
-
+    private String whiteList;
     private FilterConfig filterConfig = null;
-    
+
+    public ipFilter() {
+    }
+
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-          
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+
         HttpSession session = req.getSession();
-        
-        PrintWriter out = response.getWriter();
+
+      //  String ipAddress = req.getHeader("X-FORWARDED-FOR");
+       // ipAddress = request.getRemoteAddr();
+
         Throwable problem = null;
         try {
-            String username = session.getAttribute("username").toString();
-            
-                        
-            GregorianCalendar time = new GregorianCalendar();
-             Date date = new Date();
-             time.setTime(date);
-             int hour = time.get(Calendar.HOUR_OF_DAY);
-          
-            
-         
-             if( hour > 9 && hour <18 )
-            {
-                System.out.println("Hey, boos, you are in time.");
-                chain.doFilter(request, response);
-            }else {
                 
-                System.out.println("Please, work in work time -_- ");
-                res.sendRedirect("outOfWork.jsp");
+            if (request.getRemoteAddr().equals(this.whiteList)) {
+                System.out.println("This is allowed ip.");
+                chain.doFilter(request, response);
+            } else {
+                System.out.println("This is not allowed ip.");
+                res.sendRedirect("bannedIP.jsp");
+
             }
-         
-            
+
         } catch (Throwable t) {
-            
+
             problem = t;
             t.printStackTrace();
         }
-    } 
+    }
+
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
     }
@@ -75,15 +68,12 @@ public class TimeFilter implements Filter {
         this.filterConfig = filterConfig;
     }
 
-   
-    public void destroy() {        
+    public void destroy() {
     }
 
-    
-    public void init(FilterConfig filterConfig) {        
-        this.filterConfig = filterConfig;
-        
-        }
-    }
+    public void init(FilterConfig filterConfig) {
 
-    
+        this.whiteList = filterConfig.getInitParameter("whitelist");
+
+    }
+}

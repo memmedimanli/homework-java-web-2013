@@ -54,31 +54,17 @@ public class LoginFilter implements Filter {
         
     }
 
-    /**
-     * Return the filter configuration object for this filter.
-     */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
     }
 
-    /**
-     * Set the filter configuration object for this filter.
-     *
-     * @param filterConfig The filter configuration object
-     */
     public void setFilterConfig(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
     }
 
-    /**
-     * Destroy method for this filter
-     */
     public void destroy() {        
     }
 
-    /**
-     * Init method for this filter
-     */
     public void init(FilterConfig filterConfig) {        
         this.filterConfig = filterConfig;    
     }
