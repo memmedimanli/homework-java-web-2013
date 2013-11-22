@@ -23,8 +23,7 @@
              
             <%
                 
-                InetAddress ipAddress = InetAddress.getByName(request.getHeader("X-FORWARDED-FOR"));
-                out.println("IP address is " + ipAddress + "<br />");
+              
                
                 out.println("Session id = " + session.getId() + "<br/>");
                 out.println("Session create time = " + new Date(session.getCreationTime())  + "<br/>");

@@ -37,6 +37,8 @@ public class ipFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         HttpSession session = req.getSession();
+        
+    
 
       //  String ipAddress = req.getHeader("X-FORWARDED-FOR");
        // ipAddress = request.getRemoteAddr();

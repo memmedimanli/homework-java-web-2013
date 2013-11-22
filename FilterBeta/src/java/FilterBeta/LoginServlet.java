@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet {
             if ((username.equals("guest") && password.equals("123456")) 
                     ||
                   (username.equals("admin") && password.equals("admin"))) {                
-//                session.setMaxInactiveInterval(60);
+               // session.setMaxInactiveInterval(60);
                 session.setAttribute("username", username);
                 session.setAttribute("loginTime", new Date());
                 System.out.println("user " + username + " successfully logged in.");

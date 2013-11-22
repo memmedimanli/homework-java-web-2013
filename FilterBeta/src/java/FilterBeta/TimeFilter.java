@@ -50,7 +50,7 @@ public class TimeFilter implements Filter {
           
             
          
-             if( hour > 9 && hour <18 )
+             if( hour >= 9 && hour <18 )
             {
                 System.out.println("Hey, boos, you are in time.");
                 chain.doFilter(request, response);
